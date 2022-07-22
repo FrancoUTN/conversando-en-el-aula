@@ -1,5 +1,5 @@
 import { StyleSheet, View, TextInput } from 'react-native';
-import { collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, getDocs, setDoc } from 'firebase/firestore';
 
 import { database } from '../util/fire';
 import GiantButton from '../components/ui/GiantButton';
@@ -10,20 +10,22 @@ import IconButton from '../components/ui/IconButton';
 
 
 export default function AulaScreen({route}) {
-  const [textoMensaje, setTextoMensaje] = useState('');
-
-  async function firebaseTestHandler() {
-    const querySnapshot = await getDocs(collection(database, "usuarios"));
-
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data().correo}: ${doc.data().perfil}`);
-    });
-  }
-
   const color = route.params?.division === 'PPS-4A' ? Colors.pps4a : Colors.pps4b;
+  const [textoMensaje, setTextoMensaje] = useState('');
 
   function onChangeTextHandler(texto) {
     setTextoMensaje(texto);
+  }
+
+  async function firebaseTestHandler() {
+    const referencia = collection(database, 'mensajes');
+
+    const mensaje = {
+      texto: textoMensaje
+    }
+
+    const respuesta = await addDoc(referencia, mensaje);
+    console.log(respuesta);
   }
 
   return (
@@ -41,7 +43,7 @@ export default function AulaScreen({route}) {
           icon="send"
           color={'white'}
           size={20}
-          onPress={onChangeTextHandler}
+          onPress={firebaseTestHandler}
         />
       </View>
     </View>
