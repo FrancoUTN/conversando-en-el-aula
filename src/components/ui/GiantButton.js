@@ -1,12 +1,9 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { Colors } from '../../constants/styles';
-
 export default function GiantButton({ children, onPress, color }) {
   return (
     <Pressable
       style={({ pressed }) => [styles.rootContainer, pressed && styles.pressed]}
-      // style={styles.rootContainer}
       onPress={onPress}
     >
       <View style={[styles.botonGigante, color]}>

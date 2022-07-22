@@ -4,9 +4,11 @@ import { collection, getDocs } from 'firebase/firestore';
 import { database } from '../util/fire';
 import GiantButton from '../components/ui/GiantButton';
 import { Colors } from '../constants/styles';
+import { TextInput } from 'react-native-web';
+import Input from '../components/Auth/Input';
 
 
-function WelcomeScreen(props) {
+export default function AulaScreen({route}) {
   async function firebaseTestHandler() {
     const querySnapshot = await getDocs(collection(database, "usuarios"));
 
@@ -15,33 +17,23 @@ function WelcomeScreen(props) {
     });
   }
 
-  function pps4aHandler() {
-    props.navigation.navigate("Aula", {'division': 'PPS-4A'});
-  }
-
-  function pps4bHandler() {
-    props.navigation.navigate("Aula", {'division': 'PPS-4B'});
-  }
+  const color = route.params?.division === 'PPS-4A' ? Colors.pps4a : Colors.pps4b;
 
   return (
-    <View style={styles.rootContainer}>
-      <GiantButton
-        color={{'backgroundColor': Colors.pps4a}}
-        onPress={pps4aHandler}  
-      >
-        PPS-4A
-      </GiantButton>
-      <GiantButton
-        color={{'backgroundColor': Colors.pps4b}}
-        onPress={pps4bHandler}  
-      >
-        PPS-4B
-      </GiantButton>
+    <View style={[styles.rootContainer, {backgroundColor: color}]}>
+      <View>
+
+      </View>
+      {/* <TextInput
+        style={styles.input}
+        // keyboardType={keyboardType}
+        // secureTextEntry={secure}
+        // onChangeText={onUpdateValue}
+        // value={value}
+      /> */}
     </View>
   );
 }
-
-export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   rootContainer: {
@@ -56,5 +48,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     // alignItems: 'center',
-  }
+  },
+  input: {
+    paddingVertical: 8,
+    paddingHorizontal: 6,
+    // backgroundColor: ,
+    borderRadius: 4,
+    fontSize: 16,
+  },
 });
