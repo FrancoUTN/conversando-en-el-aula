@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
-
+import { StyleSheet, View } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
-import { firestore } from '../util/fire';
+
+import { database } from '../util/fire';
+import GiantButton from '../components/ui/GiantButton';
+import { Colors } from '../constants/styles';
+
 
 function WelcomeScreen() {
   async function firebaseTestHandler() {
-    const querySnapshot = await getDocs(collection(firestore, "usuarios"));
+    const querySnapshot = await getDocs(collection(database, "usuarios"));
 
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => ${doc.data().correo}: ${doc.data().perfil}`);
@@ -14,8 +17,12 @@ function WelcomeScreen() {
 
   return (
     <View style={styles.rootContainer}>
-      <Text style={styles.title}>Welcome!</Text>
-      <Text onPress={firebaseTestHandler}>Firebase test</Text>
+      <GiantButton color={{'backgroundColor': Colors.pps4a}}>
+        PPS-4A
+      </GiantButton>
+      <GiantButton color={{'backgroundColor': Colors.pps4b}}>
+        PPS-4B
+      </GiantButton>
     </View>
   );
 }
@@ -24,14 +31,16 @@ export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 32,
+    flex: 1
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
   },
+  botonGigante: {
+    flex: 1,
+    justifyContent: 'center',
+    // alignItems: 'center',
+  }
 });

@@ -4,4 +4,6 @@ export const Colors = {
   primary800: '#610440',
   error100: '#fcdcbf',
   error500: '#f37c13',
+  pps4a: '#5CF64A',
+  pps4b: '#023618',
 }
