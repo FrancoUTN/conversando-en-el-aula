@@ -15,12 +15,26 @@ function WelcomeScreen() {
     });
   }
 
+  function pps4aHandler() {
+    console.log("A");
+  }
+
+  function pps4bHandler() {
+    console.log("B");
+  }
+
   return (
     <View style={styles.rootContainer}>
-      <GiantButton color={{'backgroundColor': Colors.pps4a}}>
+      <GiantButton
+        color={{'backgroundColor': Colors.pps4a}}
+        onPress={pps4aHandler}  
+      >
         PPS-4A
       </GiantButton>
-      <GiantButton color={{'backgroundColor': Colors.pps4b}}>
+      <GiantButton
+        color={{'backgroundColor': Colors.pps4b}}
+        onPress={pps4bHandler}  
+      >
         PPS-4B
       </GiantButton>
     </View>
