@@ -2,19 +2,16 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Button from '../ui/Button';
+import FlatButton from '../ui/FlatButton';
 import Input from './Input';
 
 function AuthForm({ onSubmit, credentialsInvalid }) {
   const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredConfirmEmail, setEnteredConfirmEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
-  const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
 
   const {
     email: emailIsInvalid,
-    confirmEmail: emailsDontMatch,
-    password: passwordIsInvalid,
-    confirmPassword: passwordsDontMatch,
+    password: passwordIsInvalid
   } = credentialsInvalid;
 
   function updateInputValueHandler(inputType, enteredValue) {
@@ -22,14 +19,8 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
       case 'email':
         setEnteredEmail(enteredValue);
         break;
-      case 'confirmEmail':
-        setEnteredConfirmEmail(enteredValue);
-        break;
       case 'password':
         setEnteredPassword(enteredValue);
-        break;
-      case 'confirmPassword':
-        setEnteredConfirmPassword(enteredValue);
         break;
     }
   }
@@ -37,10 +28,18 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
   function submitHandler() {
     onSubmit({
       email: enteredEmail,
-      confirmEmail: enteredConfirmEmail,
-      password: enteredPassword,
-      confirmPassword: enteredConfirmPassword,
+      password: enteredPassword
     });
+  }
+
+  function accesoAdminHandler() {
+    setEnteredEmail('admin@admin.com');
+    setEnteredPassword('111111');
+  }
+
+  function accesoInvitadoHandler() {
+    setEnteredEmail('invitado@invitado.com');
+    setEnteredPassword('222222');
   }
 
   return (
@@ -65,6 +64,18 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
             Iniciar sesión
           </Button>
         </View>
+
+        <View style={styles.buttons}>
+          <FlatButton onPress={accesoAdminHandler}>
+            Acceso admin
+          </FlatButton>
+        </View>
+        <View style={styles.buttons}>
+          <FlatButton onPress={accesoInvitadoHandler} >
+            Acceso invitado
+          </FlatButton>
+        </View>
+
       </View>
     </View>
   );

@@ -50,22 +50,22 @@ function AuthContent({ isLogin, onAuthenticate }) {
 
   return (
     <>
-    <View style={styles.authContent}>
-      <AuthForm
-        isLogin={isLogin}
-        onSubmit={submitHandler}
-        credentialsInvalid={credentialsInvalid}
-      />
-    </View>
-    
-    <View style={styles.authContent}>
-      <FlatButton onPress={accesoAdminHandler}>
-        Acceso admin
-      </FlatButton>
-      <FlatButton onPress={accesoInvitadoHandler} >
-        Acceso invitado
-      </FlatButton>
-    </View>
+      <View style={styles.authContent}>
+        <AuthForm
+          isLogin={isLogin}
+          onSubmit={submitHandler}
+          credentialsInvalid={credentialsInvalid}
+        />
+      </View>
+      
+      {/* <View style={styles.authContent}>
+        <FlatButton onPress={accesoAdminHandler}>
+          Acceso admin
+        </FlatButton>
+        <FlatButton onPress={accesoInvitadoHandler} >
+          Acceso invitado
+        </FlatButton>
+      </View> */}
     </>
   );
 }
