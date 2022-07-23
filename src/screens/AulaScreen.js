@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, TextInput, FlatList, Text } from 'react-native';
-import { addDoc, collection, onSnapshot, query } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 import { Colors } from '../constants/styles';
@@ -37,7 +37,7 @@ export default function AulaScreen({route}) {
   }
 
   useEffect(() => {
-    const q = query(referencia);
+    const q = query(referencia, orderBy("fecha"));
 
     const unsubscribe = onSnapshot(q, qs => {
       setMensajes(
@@ -108,7 +108,7 @@ export default function AulaScreen({route}) {
         <IconButton
           icon="send"
           color={'white'}
-          size={20}
+          size={30}
           onPress={onSendHandler}
         />
       </View>

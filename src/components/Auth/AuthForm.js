@@ -42,6 +42,11 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
     setEnteredPassword('222222');
   }
 
+  function accesoUsuarioHandler() {
+    setEnteredEmail('usuario@usuario.com');
+    setEnteredPassword('333333');
+  }
+
   return (
     <View style={styles.form}>
       <View>
@@ -73,6 +78,11 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
         <View style={styles.buttons}>
           <FlatButton onPress={accesoInvitadoHandler} >
             Acceso invitado
+          </FlatButton>
+        </View>
+        <View style={styles.buttons}>
+          <FlatButton onPress={accesoUsuarioHandler} >
+            Acceso usuario
           </FlatButton>
         </View>
 
