@@ -7,6 +7,7 @@ import { Colors } from '../constants/styles';
 import IconButton from '../components/ui/IconButton';
 
 import referencia from '../util/firestore';
+import moment from 'moment';
 
 export default function AulaScreen({route}) {
   const auth = getAuth();
@@ -55,40 +56,23 @@ export default function AulaScreen({route}) {
   }, [])
 
   function formatDate(timestamp) {
-    // const options = {  hour: '2-digit', minute: '2-digit' };
+    const fecha = timestamp.toDate();
 
-    const strFechaOptions = {
-      weekday:"long",
-      year:"numeric",
-      month:"long",
-      day:"numeric"
-    };
-
-    // const fecha = timestamp.toDate();
-    const fecha = new Date();
-
-    const fechaLocal = fecha.toLocaleDateString('es-ES', strFechaOptions)
-
-    console.log(fechaLocal)
-
-    
-    return fechaLocal;
+    return moment(fecha).format('D/M k:mma')
   }
-
-  console.log(new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) )
 
   function renderizarItem({item}) {
     return (
       <View style={styles.mensajeContainer}>
         <Text style={styles.mensajeTexto}>
-          {item.autor}
+          {item.autor}:
         </Text>
         <Text style={styles.mensajeTexto}>
           {item.texto}
         </Text>
-        {/* <Text style={styles.mensajeTexto}>
+        <Text style={styles.mensajeTexto}>
           {formatDate(item.fecha)}
-        </Text> */}
+        </Text>
       </View>
     );
   }
