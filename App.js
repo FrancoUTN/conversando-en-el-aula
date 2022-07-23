@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 
 // Inicializar App y Auth
-import './src/util/fire'
 import './src/util/auth'
 
 import LoginScreen from './src/screens/LoginScreen';
@@ -77,8 +76,8 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      {!authCtx.isAuthenticated && <AuthStack />}
-      {authCtx.isAuthenticated && <AuthenticatedStack />}
+      {!authCtx.email && <AuthStack />}
+      {!!authCtx.email && <AuthenticatedStack />}
     </NavigationContainer>
   );
 }
