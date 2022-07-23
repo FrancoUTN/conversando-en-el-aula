@@ -24,7 +24,7 @@ function AuthStack() {
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Ingreso' }}/>
     </Stack.Navigator>
   );
 }

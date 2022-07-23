@@ -10,7 +10,7 @@ import referencia from '../util/firestore';
 import moment from 'moment';
 import Mensaje from '../components/ui/Mensaje';
 
-export default function AulaScreen({route}) {
+export default function AulaScreen({navigation, route}) {
   const auth = getAuth();
   const email = auth.currentUser.email;
   const division = route.params.division;
@@ -18,6 +18,10 @@ export default function AulaScreen({route}) {
 
   const [textoMensaje, setTextoMensaje] = useState('');
   const [mensajes, setMensajes] = useState([]);
+  
+  useEffect(
+    () => navigation.setOptions({ title: division }), []
+  );
 
   function onChangeTextHandler(texto) {
     setTextoMensaje(texto);
