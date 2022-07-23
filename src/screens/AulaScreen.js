@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, TextInput, FlatList, Text } from 'react-native';
 import { addDoc, collection, onSnapshot, query } from 'firebase/firestore';
+import {
+  getAuth
+} from 'firebase/auth';
 
-import { database } from '../util/fire';
 import { Colors } from '../constants/styles';
 import IconButton from '../components/ui/IconButton';
 
+import referencia from '../util/firestore';
 
 export default function AulaScreen({route}) {
   const color = route.params?.division === 'PPS-4A' ? Colors.pps4a : Colors.pps4b;
-  const referencia = collection(database, 'mensajes');
+
+
   const [textoMensaje, setTextoMensaje] = useState('');
   const [mensajes, setMensajes] = useState([]);
 
@@ -28,6 +32,8 @@ export default function AulaScreen({route}) {
   }
 
   useEffect(() => {
+    const auth = getAuth();
+    console.log(auth.currentUser.email);
     const q = query(referencia);
 
     const unsubscribe = onSnapshot(q, qs => {

@@ -1,17 +1,18 @@
-import axios from 'axios';
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_KEY = 'AIzaSyAe_uNqlwLgWeOYoqWjc0k26qCoPSBMXbw';
+import aplicacion from './fire';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
+
+const auth = initializeAuth(aplicacion, {
+  persistence: getReactNativePersistence(AsyncStorage)
+});
+
+export default auth;
 
 export async function login(email, password) {
-  const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
+  const uc = await signInWithEmailAndPassword(auth, email, password);
 
-  const response = await axios.post(url, {
-    email: email,
-    password: password,
-    returnSecureToken: true,
-  });
-
-  const token = response.data.idToken;
-
-  return token;
+  return uc;
 }
