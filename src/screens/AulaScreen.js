@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, TextInput, FlatList, Text } from 'react-native';
 import { addDoc, collection, onSnapshot, query } from 'firebase/firestore';
-import {
-  getAuth
-} from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 import { Colors } from '../constants/styles';
 import IconButton from '../components/ui/IconButton';
@@ -11,8 +9,10 @@ import IconButton from '../components/ui/IconButton';
 import referencia from '../util/firestore';
 
 export default function AulaScreen({route}) {
-  const color = route.params?.division === 'PPS-4A' ? Colors.pps4a : Colors.pps4b;
-
+  const auth = getAuth();
+  const email = auth.currentUser.email;
+  const division = route.params.division;
+  const color = division === 'PPS-4A' ? Colors.pps4a : Colors.pps4b;
 
   const [textoMensaje, setTextoMensaje] = useState('');
   const [mensajes, setMensajes] = useState([]);
@@ -21,19 +21,20 @@ export default function AulaScreen({route}) {
     setTextoMensaje(texto);
   }
 
-  async function firebaseTestHandler() {
+  async function onSendHandler() {
     setTextoMensaje('');
 
     const mensaje = {
-      texto: textoMensaje
+      division: division,
+      texto: textoMensaje,
+      autor: email,
+      fecha: new Date()
     }
 
     await addDoc(referencia, mensaje);
   }
 
   useEffect(() => {
-    const auth = getAuth();
-    console.log(auth.currentUser.email);
     const q = query(referencia);
 
     const unsubscribe = onSnapshot(q, qs => {
@@ -41,7 +42,10 @@ export default function AulaScreen({route}) {
         qs.docs.map(doc => (
           {
             id: doc.id,
-            texto: doc.data().texto
+            division: doc.data().division,
+            texto: doc.data().texto,
+            autor: doc.data().autor,
+            fecha: doc.data().fecha
           }
         ))
       )
@@ -50,12 +54,41 @@ export default function AulaScreen({route}) {
     return unsubscribe;
   }, [])
 
+  function formatDate(timestamp) {
+    // const options = {  hour: '2-digit', minute: '2-digit' };
+
+    const strFechaOptions = {
+      weekday:"long",
+      year:"numeric",
+      month:"long",
+      day:"numeric"
+    };
+
+    // const fecha = timestamp.toDate();
+    const fecha = new Date();
+
+    const fechaLocal = fecha.toLocaleDateString('es-ES', strFechaOptions)
+
+    console.log(fechaLocal)
+
+    
+    return fechaLocal;
+  }
+
+  console.log(new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) )
+
   function renderizarItem({item}) {
     return (
       <View style={styles.mensajeContainer}>
         <Text style={styles.mensajeTexto}>
+          {item.autor}
+        </Text>
+        <Text style={styles.mensajeTexto}>
           {item.texto}
         </Text>
+        {/* <Text style={styles.mensajeTexto}>
+          {formatDate(item.fecha)}
+        </Text> */}
       </View>
     );
   }
@@ -81,7 +114,7 @@ export default function AulaScreen({route}) {
           icon="send"
           color={'white'}
           size={20}
-          onPress={firebaseTestHandler}
+          onPress={onSendHandler}
         />
       </View>
     </View>

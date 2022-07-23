@@ -40,7 +40,7 @@ function AuthenticatedStack() {
       }}
     >
       <Stack.Screen
-        name="Welcome"
+        name="Pasillo"
         component={WelcomeScreen}
         options={{
           headerRight: ({ tintColor }) => (
