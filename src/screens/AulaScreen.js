@@ -8,6 +8,7 @@ import IconButton from '../components/ui/IconButton';
 
 import referencia from '../util/firestore';
 import moment from 'moment';
+import Mensaje from '../components/ui/Mensaje';
 
 export default function AulaScreen({route}) {
   const auth = getAuth();
@@ -62,6 +63,35 @@ export default function AulaScreen({route}) {
   }
 
   function renderizarItem({item}) {
+    if (item.autor === email) {
+      return (
+        <Mensaje
+          texto={item.texto}
+          fecha={formatDate(item.fecha)}
+        />
+      )
+      return (
+        // <View style={styles.containerContainer}>
+          <View style={styles.mensajeContainer}>
+            <Text style={styles.mensajeTexto}>
+              {item.texto}
+            </Text>
+            <Text style={styles.mensajeTexto}>
+              {formatDate(item.fecha)}
+            </Text>
+          </View>
+        // </View>
+      );
+    }
+
+    return (
+      <Mensaje
+        autor={item.autor}
+        texto={item.texto}
+        fecha={formatDate(item.fecha)}
+      />
+    );
+
     return (
       <View style={styles.mensajeContainer}>
         <Text style={styles.mensajeTexto}>
@@ -137,7 +167,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     margin: 5,
     padding: 3,
-    width: '60%'
+    width: '60%',
+    alignSelf: 'flex-end'
   },
   mensajeTexto: {
     color: '#111111'
