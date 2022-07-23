@@ -5,14 +5,14 @@ export default function Mensaje({ autor, texto, fecha }) {
     <View style={[styles.mensajeContainer, autor || {alignSelf: 'flex-end'}]}>
     {
         !!autor &&
-        <Text style={styles.mensajeTexto}>
+        <Text style={styles.autor}>
             {autor}:
         </Text>
     }
-        <Text style={styles.mensajeTexto}>
+        <Text style={styles.texto}>
             {texto}
         </Text>
-        <Text style={styles.mensajeTexto}>
+        <Text style={styles.fecha}>
             {fecha}
         </Text>
     </View>
@@ -21,13 +21,21 @@ export default function Mensaje({ autor, texto, fecha }) {
 
 const styles = StyleSheet.create({
     mensajeContainer: {    
-      backgroundColor: 'white',
-      borderRadius: 4,
-      margin: 5,
-      padding: 3,
-      width: '60%'
+        backgroundColor: 'white',
+        borderRadius: 4,
+        margin: 5,
+        padding: 6,
+        width: '60%'
     },
-    mensajeTexto: {
+    texto: {
       color: '#111111'
+    },
+    autor: {
+        color: '#111111',
+        fontWeight: 'bold'
+    },    
+    fecha: {
+        color: '#555555',
+        alignSelf: 'flex-end'
     }
 });

@@ -41,17 +41,25 @@ export default function AulaScreen({route}) {
 
     const unsubscribe = onSnapshot(q, qs => {
       setMensajes(
-        qs.docs.map(doc => (
-          {
-            id: doc.id,
-            division: doc.data().division,
-            texto: doc.data().texto,
-            autor: doc.data().autor,
-            fecha: doc.data().fecha
-          }
-        ))
+        qs.docs.reduce(
+          (result, doc) => {
+            const docDivision = doc.data().division;
+            if (docDivision === division) {
+              result.push(
+                {
+                  id: doc.id,
+                  division: docDivision,
+                  texto: doc.data().texto,
+                  autor: doc.data().autor,
+                  fecha: doc.data().fecha
+                }
+              )
+            }
+            return result;
+          }, []
+        )
       )
-    })
+    });
 
     return unsubscribe;
   }, [])
@@ -70,18 +78,6 @@ export default function AulaScreen({route}) {
           fecha={formatDate(item.fecha)}
         />
       )
-      return (
-        // <View style={styles.containerContainer}>
-          <View style={styles.mensajeContainer}>
-            <Text style={styles.mensajeTexto}>
-              {item.texto}
-            </Text>
-            <Text style={styles.mensajeTexto}>
-              {formatDate(item.fecha)}
-            </Text>
-          </View>
-        // </View>
-      );
     }
 
     return (
@@ -90,20 +86,6 @@ export default function AulaScreen({route}) {
         texto={item.texto}
         fecha={formatDate(item.fecha)}
       />
-    );
-
-    return (
-      <View style={styles.mensajeContainer}>
-        <Text style={styles.mensajeTexto}>
-          {item.autor}:
-        </Text>
-        <Text style={styles.mensajeTexto}>
-          {item.texto}
-        </Text>
-        <Text style={styles.mensajeTexto}>
-          {formatDate(item.fecha)}
-        </Text>
-      </View>
     );
   }
 
@@ -115,7 +97,6 @@ export default function AulaScreen({route}) {
           renderItem={renderizarItem}
           keyExtractor={item => item.id}
         >
-
         </FlatList>
       </View>
       <View style={styles.inputContainer}>
@@ -146,11 +127,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     flexDirection: 'row',
-    // backgroundColor: 'gray',
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
-    // paddingBottom: 20
   },
   input: {
     flex: 1,
@@ -161,16 +140,5 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 16,
     height: 40,
-  },
-  mensajeContainer: {    
-    backgroundColor: 'white',
-    borderRadius: 4,
-    margin: 5,
-    padding: 3,
-    width: '60%',
-    alignSelf: 'flex-end'
-  },
-  mensajeTexto: {
-    color: '#111111'
   }
 });
