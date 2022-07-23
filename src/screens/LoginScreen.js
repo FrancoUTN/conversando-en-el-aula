@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import { AuthContext } from '../store/auth-context';
-import { login } from '../util/auth';
+import login from '../util/authentication';
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -14,9 +14,11 @@ function LoginScreen() {
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
     try {
-      const token = await login(email, password);
-      authCtx.authenticate(token);
-    } catch (error) {
+      const usuario = await login(email, password);
+
+      authCtx.authenticate(usuario.email);
+    }
+    catch (error) {
       Alert.alert(
         'Authentication failed!',
         'Could not log you in. Please check your credentials or try again later!'
