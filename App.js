@@ -1,19 +1,28 @@
-import { useContext } from 'react';
+import { useContext, useCallback, useEffect, useMemo, useState } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import Constants from "expo-constants";
+import * as SplashScreen from "expo-splash-screen";
+import { Animated, StyleSheet, Text, View} from "react-native";
 
-// Inicializar App y Auth
-import './src/util/auth'
-
+import { Colors } from './src/constants/styles';
 import LoginScreen from './src/screens/LoginScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
-import { Colors } from './src/constants/styles';
 import AuthContextProvider, { AuthContext } from './src/store/auth-context';
 import IconButton from './src/components/ui/IconButton';
 import AulaScreen from './src/screens/AulaScreen';
 
+// Inicializar App y Auth
+import './src/util/auth'
+
+
+// Instruct SplashScreen not to hide yet, we want to do this manually
+SplashScreen.preventAutoHideAsync().catch(() => {
+  /* reloading the app might trigger some race conditions, ignore them */
+});
 const Stack = createNativeStackNavigator();
+
 
 function AuthStack() {
   return (
@@ -82,13 +91,96 @@ function Navigation() {
   );
 }
 
+// export default function App() {
+//   return (
+//     <>
+//       <StatusBar style="light" />
+//       <AuthContextProvider>
+//         <Navigation />
+//       </AuthContextProvider>
+//     </>
+//   );
+// }
+
 export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <AuthContextProvider>
-        <Navigation />
-      </AuthContextProvider>
+      <AnimatedSplashScreen image={require('./assets/splash.png')}>
+        <MainScreen />
+      </AnimatedSplashScreen>
     </>
+  );
+}
+
+function AnimatedSplashScreen({ children, image }) {
+  const animation = useMemo(() => new Animated.Value(0), []);
+  const [isAppReady, setAppReady] = useState(false);
+  const [isSplashAnimationComplete, setAnimationComplete] = useState(false);
+
+  const onImageLoaded = useCallback(async () => {
+    try {
+      await setTimeout(() => SplashScreen.hideAsync() , 200);
+      // await SplashScreen.hideAsync()
+      // await SplashScreen.hideAsync();
+      // Load stuff
+      // await Promise.all([]);
+    } catch (e) {
+      // handle errors
+    } finally {
+      setAppReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAppReady) {
+      Animated.timing(animation, {
+        toValue: 5000,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start(() => setAnimationComplete(true));
+    }
+  }, [isAppReady]);
+
+  return (
+    <View style={{ flex: 1 }}>
+      {isAppReady && children}
+      {!isSplashAnimationComplete && (
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              backgroundColor: Constants.manifest.splash.backgroundColor,
+              opacity: animation,
+            },
+          ]}
+        >
+          <Animated.Image
+            style={{
+              width: "100%",
+              height: "100%",
+              resizeMode: Constants.manifest.splash.resizeMode || "contain",
+              transform: [
+                {
+                  translateY: animation,
+                },
+              ],
+            }}
+            source={image}
+            onLoadEnd={onImageLoaded}
+            fadeDuration={0}
+          />
+        </Animated.View>
+      )}
+    </View>
+  );
+}
+
+function MainScreen() {
+  return (
+    <AuthContextProvider>
+      <Navigation />
+    </AuthContextProvider>
   );
 }
