@@ -91,17 +91,6 @@ function Navigation() {
   );
 }
 
-// export default function App() {
-//   return (
-//     <>
-//       <StatusBar style="light" />
-//       <AuthContextProvider>
-//         <Navigation />
-//       </AuthContextProvider>
-//     </>
-//   );
-// }
-
 export default function App() {
   return (
     <>
@@ -120,8 +109,8 @@ function AnimatedSplashScreen({ children, image }) {
 
   const onImageLoaded = useCallback(async () => {
     try {
-      await setTimeout(() => SplashScreen.hideAsync() , 200);
-      // await SplashScreen.hideAsync()
+      await setTimeout(() => SplashScreen.hideAsync(), 300);
+
       // await SplashScreen.hideAsync();
       // Load stuff
       // await Promise.all([]);
@@ -136,7 +125,7 @@ function AnimatedSplashScreen({ children, image }) {
     if (isAppReady) {
       Animated.timing(animation, {
         toValue: 5000,
-        duration: 1000,
+        duration: 1500,
         useNativeDriver: true,
       }).start(() => setAnimationComplete(true));
     }
