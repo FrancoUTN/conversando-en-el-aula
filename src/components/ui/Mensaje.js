@@ -28,13 +28,15 @@ const styles = StyleSheet.create({
         width: '60%'
     },
     texto: {
-      color: '#111111'
+        fontFamily: 'Montserrat_400Regular',
+        color: '#111111'
     },
     autor: {
         color: '#111111',
-        fontWeight: 'bold'
+        fontFamily: 'Montserrat_700Bold',
     },    
     fecha: {
+        fontFamily: 'Montserrat_400Regular',
         color: '#555555',
         alignSelf: 'flex-end'
     }

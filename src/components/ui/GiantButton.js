@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   buttonText: {
+    fontFamily: 'Montserrat_700Bold',
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold'
+    fontSize: 28,
   },
   botonGigante: {
     flex: 1,

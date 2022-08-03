@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary100,
     borderRadius: 4,
     fontSize: 16,
-    fontFamily: 'Montserrat_400Regular'
+    fontFamily: 'Montserrat_400Regular',
+    color: Colors.primary800,
   },
   inputInvalid: {
     backgroundColor: Colors.error100,
