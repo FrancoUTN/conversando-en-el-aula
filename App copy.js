@@ -92,73 +92,56 @@ function Navigation() {
 }
 
 export default function App() {
-  const imagen = require('./assets/splash.png');
-  const [appLoading, setAppLoading] = useState(true);
-
-  useEffect(() => {
-    console.log('Arranca aplicación');
-  }, []);
-
-  function onFinishHandler() {
-    console.log('Oculto animación');
-    setAppLoading(false);
-  }
-
   return (
     <>
-      {
-        appLoading ?
-        <AnimatedSplashScreen
-          image={imagen}
-          onFinish={onFinishHandler}
-        />
-        :
+      <StatusBar style="light" />
+      <AnimatedSplashScreen image={require('./assets/splash.png')}>
         <MainScreen />
-      }
+      </AnimatedSplashScreen>
     </>
   );
 }
 
-function AnimatedSplashScreen({ image, onFinish }) {
-	// let [fontsLoaded] = useFonts({
-	// 	MouseMemoirs_400Regular,
-	// });
-  let fontsLoaded = true; //
-
-  const animation = useMemo(() => new Animated.Value(1), []);
-  
-  const efecto = () => {
-    Animated.timing(animation, {
-      toValue: 0,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start(() => onFinish());
-  };
+function AnimatedSplashScreen({ children, image }) {
+  const animation = useMemo(() => new Animated.Value(0), []);
+  const [isAppReady, setAppReady] = useState(false);
+  const [isSplashAnimationComplete, setAnimationComplete] = useState(false);
 
   const onImageLoaded = useCallback(async () => {
     try {
-      console.log('Oculto splash');
-      await SplashScreen.hideAsync();
-      // SplashScreen.hideAsync();
+      await setTimeout(() => SplashScreen.hideAsync(), 300);
+
+      // await SplashScreen.hideAsync();
+      // Load stuff
+      // await Promise.all([]);
     } catch (e) {
-      console.log(e); // Útil
+      // handle errors
     } finally {
-      console.log('Empiezo animación');
-      efecto();
+      setAppReady(true);
     }
   }, []);
 
+  useEffect(() => {
+    if (isAppReady) {
+      Animated.timing(animation, {
+        toValue: 5000,
+        duration: 1500,
+        useNativeDriver: true,
+      }).start(() => setAnimationComplete(true));
+    }
+  }, [isAppReady]);
+
   return (
     <View style={{ flex: 1 }}>
-      {
-        fontsLoaded &&
+      {isAppReady && children}
+      {!isSplashAnimationComplete && (
         <Animated.View
           pointerEvents="none"
           style={[
             StyleSheet.absoluteFill,
             {
-              backgroundColor: '#c30b64', // Manual
-              // opacity: animation,
+              backgroundColor: Constants.manifest.splash.backgroundColor,
+              opacity: animation,
             },
           ]}
         >
@@ -166,10 +149,10 @@ function AnimatedSplashScreen({ image, onFinish }) {
             style={{
               width: "100%",
               height: "100%",
-              resizeMode: "contain", // Manual
+              resizeMode: Constants.manifest.splash.resizeMode || "contain",
               transform: [
                 {
-                  scale: animation,
+                  translateY: animation,
                 },
               ],
             }}
@@ -178,7 +161,7 @@ function AnimatedSplashScreen({ image, onFinish }) {
             fadeDuration={0}
           />
         </Animated.View>
-      }
+      )}
     </View>
   );
 }
