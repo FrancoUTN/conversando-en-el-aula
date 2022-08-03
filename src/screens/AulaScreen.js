@@ -20,6 +20,7 @@ export default function AulaScreen({navigation, route}) {
   const [textoMensaje, setTextoMensaje] = useState('');
   const [mensajes, setMensajes] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(false);
   
   useEffect(
     () => navigation.setOptions({ title: division }), []
@@ -30,16 +31,22 @@ export default function AulaScreen({navigation, route}) {
   }
 
   async function onSendHandler() {
-    setTextoMensaje('');
-
-    const mensaje = {
-      division: division,
-      texto: textoMensaje,
-      autor: email,
-      fecha: new Date()
+    if (textoMensaje.length > 21) {
+      error || setError(true);
     }
+    else if (textoMensaje != '') {
+      setTextoMensaje('');
+      error && setError(false);
 
-    await addDoc(referencia, mensaje);
+      const mensaje = {
+        division: division,
+        texto: textoMensaje,
+        autor: email,
+        fecha: new Date()
+      }
+
+      await addDoc(referencia, mensaje);
+    }
   }
 
   useEffect(() => {
@@ -110,6 +117,14 @@ export default function AulaScreen({navigation, route}) {
         >
         </FlatList>
       </View>
+      <View style={styles.errorContainer}>
+      {
+        error &&
+        <Text style={styles.error}>
+          Error: 21 caracteres máximo.
+        </Text>
+      }
+      </View>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -151,5 +166,14 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 16,
     height: 40,
+  },
+  errorContainer: {
+    // minHeight: 15,
+  },
+  error: {
+    color: Colors.error500,
+    marginBottom: 4,
+    fontFamily: 'Montserrat_400Regular',
+    textAlign: 'center'
   }
 });
