@@ -55,7 +55,16 @@ function AuthStack() {
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Ingreso' }}/>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          title: 'Inicia sesión',
+          headerTitleStyle: {
+            fontFamily: 'Montserrat_500Medium'
+          }
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -74,6 +83,9 @@ function AuthenticatedStack() {
         name="Pasillo"
         component={WelcomeScreen}
         options={{
+          headerTitleStyle: {
+            fontFamily: 'Montserrat_500Medium'
+          },
           headerRight: ({ tintColor }) => (
             <IconButton
               icon="exit"
@@ -88,6 +100,9 @@ function AuthenticatedStack() {
         name="Aula"
         component={AulaScreen}
         options={{
+          headerTitleStyle: {
+            fontFamily: 'Montserrat_500Medium'
+          },
           headerRight: ({ tintColor }) => (
             <IconButton
               icon="exit"

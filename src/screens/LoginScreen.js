@@ -20,15 +20,15 @@ function LoginScreen() {
     }
     catch (error) {
       Alert.alert(
-        'Authentication failed!',
-        'Could not log you in. Please check your credentials or try again later!'
+        '¡La autenticación falló!',
+        'Intenta de nuevo más tarde'
       );
       setIsAuthenticating(false);
     }
   }
 
   if (isAuthenticating) {
-    return <LoadingOverlay message="Logging you in..." />;
+    return <LoadingOverlay message="Accediendo..." />;
   }
 
   return <AuthContent isLogin onAuthenticate={loginHandler} />;
