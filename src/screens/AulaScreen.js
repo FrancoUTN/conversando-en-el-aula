@@ -9,6 +9,7 @@ import IconButton from '../components/ui/IconButton';
 import referencia from '../util/firestore';
 import moment from 'moment';
 import Mensaje from '../components/ui/Mensaje';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 export default function AulaScreen({navigation, route}) {
   const auth = getAuth();
@@ -18,6 +19,7 @@ export default function AulaScreen({navigation, route}) {
 
   const [textoMensaje, setTextoMensaje] = useState('');
   const [mensajes, setMensajes] = useState([]);
+  const [cargando, setCargando] = useState(true);
   
   useEffect(
     () => navigation.setOptions({ title: division }), []
@@ -62,9 +64,10 @@ export default function AulaScreen({navigation, route}) {
             return result;
           }, []
         )
-      )
-    });
+      );
 
+      setCargando(false);
+    });
     return unsubscribe;
   }, [])
 
@@ -91,6 +94,10 @@ export default function AulaScreen({navigation, route}) {
         fecha={formatDate(item.fecha)}
       />
     );
+  }
+
+  if (cargando) {
+    return <LoadingOverlay message={'Cargando los mensajes...'} />
   }
 
   return (
