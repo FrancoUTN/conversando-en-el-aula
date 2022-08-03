@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import Button from '../ui/Button';
 import FlatButton from '../ui/FlatButton';
@@ -47,9 +47,50 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
     setEnteredPassword('333333');
   }
 
+  function accesoAnonimoHandler() {
+    setEnteredEmail('anonimo@anonimo.com');
+    setEnteredPassword('444444');
+  }
+
+  function accesoTesterHandler() {
+    setEnteredEmail('tester@tester.com');
+    setEnteredPassword('555555');
+  }
+
   return (
-    <View style={styles.form}>
-      <View>
+    <View>
+      <View style={styles.accesos}>
+        <Text style={styles.texto}>
+          Eres:
+        </Text>
+        <View>
+          <View style={styles.buttons}>
+            <FlatButton onPress={accesoAdminHandler}>
+              Admin
+            </FlatButton>
+          </View>
+          <View style={styles.buttons}>
+            <FlatButton onPress={accesoInvitadoHandler} >
+              Invitado
+            </FlatButton>
+          </View>
+          <View style={styles.buttons}>
+            <FlatButton onPress={accesoUsuarioHandler} >
+              Usuario
+            </FlatButton>
+          </View>
+          <View style={styles.buttons}>
+            <FlatButton onPress={accesoAnonimoHandler} >
+              Anónimo
+            </FlatButton>
+          </View>
+          <View style={styles.buttons}>
+            <FlatButton onPress={accesoTesterHandler} >
+              Tester
+            </FlatButton>
+          </View>
+        </View>
+      </View>
         <Input
           label="Correo electrónico"
           onUpdateValue={updateInputValueHandler.bind(this, 'email')}
@@ -69,24 +110,6 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
             Iniciar sesión
           </Button>
         </View>
-
-        <View style={styles.buttons}>
-          <FlatButton onPress={accesoAdminHandler}>
-            Acceso admin
-          </FlatButton>
-        </View>
-        <View style={styles.buttons}>
-          <FlatButton onPress={accesoInvitadoHandler} >
-            Acceso invitado
-          </FlatButton>
-        </View>
-        <View style={styles.buttons}>
-          <FlatButton onPress={accesoUsuarioHandler} >
-            Acceso usuario
-          </FlatButton>
-        </View>
-
-      </View>
     </View>
   );
 }
@@ -97,4 +120,16 @@ const styles = StyleSheet.create({
   buttons: {
     marginTop: 12,
   },
+  texto: {
+    fontFamily: 'Montserrat_500Medium',
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 26
+  },
+  accesos: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginBottom: 30
+  }
 });
