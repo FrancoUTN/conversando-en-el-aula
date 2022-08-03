@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   label: {
     color: 'white',
     marginBottom: 4,
+    fontFamily: 'Montserrat_400Regular'
   },
   labelInvalid: {
     color: Colors.error500,
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary100,
     borderRadius: 4,
     fontSize: 16,
+    fontFamily: 'Montserrat_400Regular'
   },
   inputInvalid: {
     backgroundColor: Colors.error100,
