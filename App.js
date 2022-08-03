@@ -37,6 +37,7 @@ import AulaScreen from './src/screens/AulaScreen';
 
 // Inicializar App y Auth
 import './src/util/auth'
+import ModalScreen from "./src/screens/ModalScreen";
 
 
 // Instruct SplashScreen not to hide yet, we want to do this manually
@@ -65,6 +66,15 @@ function AuthStack() {
           }
         }}
       />
+      <Stack.Group screenOptions={{
+          presentation: 'modal',
+          headerStyle: { backgroundColor: Colors.error500 },
+          headerTintColor: 'white',
+          contentStyle: { backgroundColor: Colors.error100 },
+        }}
+      >
+        <Stack.Screen name="Modal" component={ModalScreen} options={{ title: 'Error' }}/>
+      </Stack.Group>
     </Stack.Navigator>
   );
 }

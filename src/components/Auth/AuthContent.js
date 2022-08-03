@@ -25,7 +25,10 @@ function AuthContent({ isLogin, onAuthenticate }) {
     const passwordIsValid = password.length >= 6;
 
     if ( !emailIsValid || !passwordIsValid ) {
-      Alert.alert('Invalid input', 'Please check your entered credentials.');
+      navigation.navigate({
+        name: 'Modal',
+        params: { mensajeError: 'Error: Datos inválidos.'}
+      });
       
       setCredentialsInvalid({
         email: !emailIsValid,

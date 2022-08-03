@@ -6,7 +6,7 @@ import LoadingOverlay from '../components/ui/LoadingOverlay';
 import { AuthContext } from '../store/auth-context';
 import login from '../util/authentication';
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const authCtx = useContext(AuthContext);
@@ -19,10 +19,14 @@ function LoginScreen() {
       authCtx.authenticate(usuario.email);
     }
     catch (error) {
-      Alert.alert(
-        '¡La autenticación falló!',
-        'Intenta de nuevo más tarde'
-      );
+      console.log(error);
+      navigation.navigate({
+        name: 'Modal',
+        params: {
+          mensajeError: 'Autenticación fallida. Intenta nuevamente'
+        }
+      });
+
       setIsAuthenticating(false);
     }
   }
