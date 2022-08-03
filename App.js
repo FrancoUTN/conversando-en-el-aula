@@ -71,6 +71,15 @@ function AuthStack() {
 
 function AuthenticatedStack() {
   const authCtx = useContext(AuthContext);
+  const logoutIcon = (
+    <IconButton
+      icon="power"
+      color='white'
+      size={24}
+      onPress={authCtx.logout}
+    />
+  );
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -86,14 +95,7 @@ function AuthenticatedStack() {
           headerTitleStyle: {
             fontFamily: 'Montserrat_500Medium'
           },
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor}
-              size={24}
-              onPress={authCtx.logout}
-            />
-          ),
+          headerRight: () => logoutIcon
         }}
       />
       <Stack.Screen
@@ -103,14 +105,7 @@ function AuthenticatedStack() {
           headerTitleStyle: {
             fontFamily: 'Montserrat_500Medium'
           },
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor}
-              size={24}
-              onPress={authCtx.logout}
-            />
-          ),
+          headerRight: () => logoutIcon
         }}
       />
     </Stack.Navigator>
