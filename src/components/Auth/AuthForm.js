@@ -61,7 +61,7 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
     <View>
       <View style={styles.accesos}>
         <Text style={styles.texto}>
-          Eres:
+          Usuarios:
         </Text>
         <View>
           <View style={styles.buttons}>
