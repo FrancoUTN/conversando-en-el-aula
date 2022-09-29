@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 
 import Button from '../ui/Button';
-import FlatButton from '../ui/FlatButton';
 import Input from './Input';
 
 function AuthForm({ onSubmit, credentialsInvalid }) {
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [clave, setClave] = useState('');
+  const [valorSeleccionado, setValorSeleccionado] = useState('Hola');
 
   const {
     email: emailIsInvalid,
@@ -17,99 +18,82 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
   function updateInputValueHandler(inputType, enteredValue) {
     switch (inputType) {
       case 'email':
-        setEnteredEmail(enteredValue);
+        setCorreo(enteredValue);
         break;
       case 'password':
-        setEnteredPassword(enteredValue);
+        setClave(enteredValue);
         break;
     }
   }
 
   function submitHandler() {
     onSubmit({
-      email: enteredEmail,
-      password: enteredPassword
+      email: correo,
+      password: clave
     });
   }
 
-  function accesoAdminHandler() {
-    setEnteredEmail('admin@admin.com');
-    setEnteredPassword('111111');
-  }
-
-  function accesoInvitadoHandler() {
-    setEnteredEmail('invitado@invitado.com');
-    setEnteredPassword('222222');
-  }
-
-  function accesoUsuarioHandler() {
-    setEnteredEmail('usuario@usuario.com');
-    setEnteredPassword('333333');
-  }
-
-  function accesoAnonimoHandler() {
-    setEnteredEmail('anonimo@anonimo.com');
-    setEnteredPassword('444444');
-  }
-
-  function accesoTesterHandler() {
-    setEnteredEmail('tester@tester.com');
-    setEnteredPassword('555555');
+  function onPressItemHandler(name) {
+    setValorSeleccionado(name);
+    switch (name) {
+      case 'admin':
+        setCorreo('admin@admin.com');
+        setClave('111111');
+        break;
+      case 'invitado':
+        setCorreo('invitado@invitado.com');
+        setClave('222222');
+        break;
+      case 'usuario':
+        setCorreo('usuario@usuario.com');
+        setClave('333333');
+        break;
+      case 'anonimo':
+        setCorreo('anonimo@anonimo.com');
+        setClave('444444');
+        break;
+      case 'tester':
+        setCorreo('tester@tester.com');
+        setClave('555555');
+        break;
+    }
   }
 
   return (
     <View>
-      <View style={styles.accesos}>
-        <Text style={styles.texto}>
-          Usuarios:
-        </Text>
-        <View>
-          <View style={styles.buttons}>
-            <FlatButton onPress={accesoAdminHandler}>
-              Admin
-            </FlatButton>
-          </View>
-          <View style={styles.buttons}>
-            <FlatButton onPress={accesoInvitadoHandler} >
-              Invitado
-            </FlatButton>
-          </View>
-          <View style={styles.buttons}>
-            <FlatButton onPress={accesoUsuarioHandler} >
-              Usuario
-            </FlatButton>
-          </View>
-          <View style={styles.buttons}>
-            <FlatButton onPress={accesoAnonimoHandler} >
-              Anónimo
-            </FlatButton>
-          </View>
-          <View style={styles.buttons}>
-            <FlatButton onPress={accesoTesterHandler} >
-              Tester
-            </FlatButton>
-          </View>
-        </View>
+      <Input
+        label="Correo"
+        onUpdateValue={updateInputValueHandler.bind(this, 'email')}
+        value={correo}
+        keyboardType="email-address"
+        isInvalid={emailIsInvalid}
+      />
+      <Input
+        label="Clave"
+        onUpdateValue={updateInputValueHandler.bind(this, 'password')}
+        secure
+        value={clave}
+        isInvalid={passwordIsInvalid}
+      />
+      <Picker
+        selectedValue={valorSeleccionado}
+        onValueChange={
+          (itemValue) => onPressItemHandler(itemValue)
+        }
+        style={{color: 'white'}}
+        // mode={'dropdown'}
+      >
+        <Picker.Item label="Administrador" value="admin" />
+        <Picker.Item label="Invitado" value="invitado" />
+        <Picker.Item label="Usuario" value="usuario" />
+        <Picker.Item label="Anónimo" value="anonimo" />
+        <Picker.Item label="Tester" value="tester" />
+      </Picker>
+      <View style={styles.buttons}>
+        <Button onPress={submitHandler}>
+          Ingresar
+        </Button>
       </View>
-        <Input
-          label="Correo electrónico"
-          onUpdateValue={updateInputValueHandler.bind(this, 'email')}
-          value={enteredEmail}
-          keyboardType="email-address"
-          isInvalid={emailIsInvalid}
-        />
-        <Input
-          label="Contraseña"
-          onUpdateValue={updateInputValueHandler.bind(this, 'password')}
-          secure
-          value={enteredPassword}
-          isInvalid={passwordIsInvalid}
-        />
-        <View style={styles.buttons}>
-          <Button onPress={submitHandler}>
-            Ingresar
-          </Button>
-        </View>
     </View>
   );
 }

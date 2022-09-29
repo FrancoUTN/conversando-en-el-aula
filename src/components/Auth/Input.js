@@ -31,24 +31,27 @@ export default Input;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginVertical: 8,
+    marginVertical: 16,
   },
   label: {
     color: 'white',
-    marginBottom: 4,
-    fontFamily: 'Montserrat_400Regular'
+    marginBottom: 10,
+    fontFamily: 'Montserrat_400Regular',
+    textAlign: 'center',
+    fontSize: 24
   },
   labelInvalid: {
     color: Colors.error500,
   },
   input: {
-    paddingVertical: 8,
-    paddingHorizontal: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
     backgroundColor: Colors.primary100,
-    borderRadius: 4,
-    fontSize: 16,
+    borderRadius: 20,
+    fontSize: 22,
     fontFamily: 'Montserrat_400Regular',
     color: Colors.primary800,
+    textAlign: 'center'
   },
   inputInvalid: {
     backgroundColor: Colors.error100,
