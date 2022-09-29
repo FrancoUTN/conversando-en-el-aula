@@ -9,7 +9,7 @@ import { Colors } from '../../constants/styles';
 function AuthForm({ onSubmit, credentialsInvalid }) {
   const [correo, setCorreo] = useState('');
   const [clave, setClave] = useState('');
-  const [valorSeleccionado, setValorSeleccionado] = useState('Hola');
+  const [valorSeleccionado, setValorSeleccionado] = useState();
 
   const {
     email: emailIsInvalid,
@@ -37,6 +37,10 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
   function onPressItemHandler(name) {
     setValorSeleccionado(name);
     switch (name) {
+      case 'manual':
+        setCorreo('');
+        setClave('');
+        break;
       case 'admin':
         setCorreo('admin@admin.com');
         setClave('111111');
@@ -86,6 +90,13 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
         prompt={'Usuarios:'}
         // mode={'dropdown'}
       >
+        <Picker.Item
+          label="Manual"
+          value="manual"
+          color={Colors.primary800}
+          fontFamily={'Montserrat_400Regular'}
+          style={styles.pickerItem}
+        />
         <Picker.Item
           label="Administrador"
           value="admin"
@@ -152,7 +163,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     color: Colors.secondary,
-    width: 200,
+    width: 235,
     alignSelf: 'center',
     backgroundColor: Colors.primary500,
     borderRadius: 20,

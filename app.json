@@ -26,6 +26,11 @@
         "backgroundColor": "#0000aa"
       },
       "package": "com.maxiterra.conversandoenelaula"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2c49d561-51d2-4ef3-8740-9eea41e12ee9"
+      }
     }
   }
 }
