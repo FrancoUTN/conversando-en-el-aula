@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker';
 
 import Button from '../ui/Button';
 import Input from './Input';
+import { Colors } from '../../constants/styles';
 
 function AuthForm({ onSubmit, credentialsInvalid }) {
   const [correo, setCorreo] = useState('');
@@ -80,18 +81,50 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
         onValueChange={
           (itemValue) => onPressItemHandler(itemValue)
         }
-        style={{color: 'white'}}
+        style={styles.picker}
+        dropdownIconColor={Colors.secondary}
+        prompt={'Usuarios:'}
         // mode={'dropdown'}
       >
-        <Picker.Item label="Administrador" value="admin" />
-        <Picker.Item label="Invitado" value="invitado" />
-        <Picker.Item label="Usuario" value="usuario" />
-        <Picker.Item label="Anónimo" value="anonimo" />
-        <Picker.Item label="Tester" value="tester" />
+        <Picker.Item
+          label="Administrador"
+          value="admin"
+          color={Colors.primary800}
+          fontFamily={'Montserrat_400Regular'}
+          style={styles.pickerItem}
+        />
+        <Picker.Item
+          label="Invitado"
+          value="invitado"
+          color={Colors.primary800}
+          fontFamily={'Montserrat_400Regular'}
+          style={styles.pickerItem}
+        />
+        <Picker.Item
+          label="Usuario"
+          value="usuario"
+          color={Colors.primary800}
+          fontFamily={'Montserrat_400Regular'}
+          style={styles.pickerItem}
+        />
+        <Picker.Item
+          label="Anónimo"
+          value="anonimo"
+          color={Colors.primary800}
+          fontFamily={'Montserrat_400Regular'}
+          style={styles.pickerItem}
+        />
+        <Picker.Item
+          label="Tester"
+          value="tester"
+          color={Colors.primary800}
+          fontFamily={'Montserrat_400Regular'}
+          style={styles.pickerItem}
+        />
       </Picker>
       <View style={styles.buttons}>
         <Button onPress={submitHandler}>
-          Ingresar
+          Entrar
         </Button>
       </View>
     </View>
@@ -103,6 +136,7 @@ export default AuthForm;
 const styles = StyleSheet.create({
   buttons: {
     marginTop: 12,
+    alignSelf: 'center'
   },
   texto: {
     fontFamily: 'Montserrat_500Medium',
@@ -115,5 +149,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginBottom: 30
+  },
+  picker: {
+    color: Colors.secondary,
+    width: 200,
+    alignSelf: 'center',
+    backgroundColor: Colors.primary500,
+    borderRadius: 20,
+    marginVertical: 36
+  },
+  pickerItem: {
+    fontSize: 20,
   }
 });

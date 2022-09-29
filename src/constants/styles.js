@@ -6,4 +6,5 @@ export const Colors = {
   error500: '#f37c13',
   pps4a: '#5CF64A',
   pps4b: '#023618',
+  secondary: '#FFFFFF'
 }

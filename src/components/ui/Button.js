@@ -19,15 +19,10 @@ export default Button;
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 6,
+    borderRadius: 4,
     paddingVertical: 6,
     paddingHorizontal: 12,
-    backgroundColor: Colors.primary500,
-    elevation: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    backgroundColor: Colors.primary500
   },
   pressed: {
     opacity: 0.7,
@@ -36,7 +31,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_400Regular',
     textAlign: 'center',
     color: 'white',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold'
   },
 });
