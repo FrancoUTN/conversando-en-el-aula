@@ -121,7 +121,7 @@ export default function AulaScreen({navigation, route}) {
       {
         error &&
         <Text style={styles.error}>
-          Error: 21 caracteres máximo.
+          Error: 21 caracteres como máximo.
         </Text>
       }
       </View>
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     // minHeight: 15,
   },
   error: {
-    color: Colors.error500,
+    color: Colors.secondary,
     marginBottom: 4,
     fontFamily: 'Montserrat_400Regular',
     textAlign: 'center'
