@@ -2,7 +2,7 @@
   "expo": {
     "name": "conversando-en-el-aula",
     "slug": "conversando-en-el-aula",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -29,7 +29,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "2c49d561-51d2-4ef3-8740-9eea41e12ee9"
+        "projectId": "19229d96-cf92-4423-9be7-124ae68a75c6"
       }
     }
   }
