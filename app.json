@@ -25,11 +25,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0000aa"
       },
-      "package": "com.maxiterra.conversandoenelaula"
+      "package": "com.cfrancodev.conversandoenelaula"
     },
     "extra": {
       "eas": {
-        "projectId": "19229d96-cf92-4423-9be7-124ae68a75c6"
+        "projectId": "65c1c789-ecd6-4e27-9b46-beb572031c42"
       }
     }
   }
